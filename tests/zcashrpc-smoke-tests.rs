@@ -67,7 +67,7 @@ fn make_client() -> Client {
     //    let auth = encode(get_var("ZCASHRPC_TEST_AUTH"));
     let host = std::env::var("ZCASHRPC_TEST_HOST")
         .unwrap_or(String::from("127.0.0.1:18232".to_string()));
-    let auth = std::env::var("ZCASHRPC__TEST_AUTH").unwrap_or_else(|_| {
+    let auth = std::env::var("ZCASHRPC_TEST_AUTH").unwrap_or_else(|_| {
         let cookie_path = match std::env::var("REGTEST") {
             Ok(_) => "~/.zcash/regtest/.cookie",
             Err(_) => "~/.zcash/.cookie",
