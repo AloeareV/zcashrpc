@@ -12,4 +12,4 @@ pub use client::Client;
 pub use error::{Error, ResponseResult};
 
 /// The `ZecAmount` type alias is used to document where ZEC-denominated fields are used. Note that this does not represent Zatoshi-denominated units.
-pub type ZecAmount = f64;
+pub type ZecAmount = rust_decimal::Decimal;

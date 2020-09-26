@@ -24,6 +24,7 @@ dirs = { version = "*", optional = true }
 proc-macro2 = "1.0"
 quote = "1.0"
 cfg-if = "0.1.10"
+rust_decimal = "*"
 
 [build-dependencies]
 tokio = { version = "*", features = ["macros"] }
