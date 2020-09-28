@@ -17,5 +17,6 @@ run_smoketest!(getblockchaininfo);
 fn serialize_and_deserialize_empty() {
     let foo = "";
     let jfoo = serde_json::json!(foo);
+    assert_eq!(foo, jfoo);
     assert_eq!(format!("{}", jfoo), format!("{}", foo));
 }
