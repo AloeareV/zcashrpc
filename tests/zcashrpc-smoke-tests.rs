@@ -12,3 +12,10 @@ macro_rules! run_smoketest {
 
 run_smoketest!(getinfo);
 run_smoketest!(getblockchaininfo);
+
+#[test]
+fn serialize_and_deserialize_empty() {
+    let foo = "";
+    let jfoo = serde_json::json!(foo);
+    assert_eq!(format!("{}", jfoo), format!("{}", foo));
+}
