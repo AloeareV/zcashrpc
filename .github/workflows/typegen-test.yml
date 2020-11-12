@@ -1,0 +1,22 @@
+name: cargo-test-zcashrpc-typegen
+
+on:
+  pull_request:
+    branches: [ master ]
+    types: [ assigned, opened, synchronize, reopened ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Enter directory
+      run: cd zcashrpc-typegen
+    - name: Build
+      run: cargo build --verbose
+    - name: Run tests
+      run: cargo test --verbose
+    - name: Call generate
+      run: cargo run --verbose -- generate
