@@ -12,6 +12,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: debug
+      run: ls -la
     - name: Enter directory
       run: cd zcashrpc-typegen
     - name: Build
