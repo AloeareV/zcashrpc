@@ -12,11 +12,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Authenticate Github CR
-      env: 
-        PAT: ${{ secrets.CONTAINER_REGESTRY_READ }}
-      run: echo $PAT | docker login ghcr.io -u USERNAME --password-stdin
-    - name: Pull image
-      run: docker pull ghcr.io/zingolabs/zcashrpc:latest
-    - name: Run Tests
-      run:  docker run  -v /zcashrpc:/zcashrpc ghcr.io/zingolabs/zcashrpc:latest bash -c "./zcash/src/zcashd -daemon && cd zcashrpc && cargo test"
+    - name: Debug
+      runs: pwd
