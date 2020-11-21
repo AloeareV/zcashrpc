@@ -19,4 +19,4 @@ jobs:
     - name: Pull image
       run: docker pull ghcr.io/zingolabs/zcashrpc:latest
     - name: Run Tests
-      run:  docker run  -v /zcashrpc:/zcashrpc ghcr.io/zingolabs/zcashd:latest bash -c "./zcash/src/zcashd -daemon && cd zcashrpc && cargo test"
+      run:  docker run  -v /zcashrpc:/zcashrpc ghcr.io/zingolabs/zcashrpc:latest bash -c "./zcash/src/zcashd -daemon && cd zcashrpc && cargo test"
