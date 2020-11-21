@@ -12,8 +12,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Debug
-      run: Authenticate Github CR
+    - name:  Authenticate Github CR
       env: 
         PAT: ${{ secrets.CONTAINER_REGESTRY_READ }}
       run: echo $PAT | docker login ghcr.io -u USERNAME --password-stdin
