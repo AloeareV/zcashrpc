@@ -3,7 +3,6 @@ name: cargo-test-zcashrpc-typegen
 on:
   pull_request:
     branches: [ master ]
-    types: [ assigned, opened, synchronize, reopened ]
 
 jobs:
   build:
@@ -14,7 +13,7 @@ jobs:
     - uses: actions/checkout@v2
     - name:  Authenticate Github CR
       env: 
-        PAT: ${{ secrets.CONTAINER_REGESTRY_READ }}
+        PAT: ${{ secrets.CONTAINER_REGISTRY_READ }}
       run: echo $PAT | docker login ghcr.io -u USERNAME --password-stdin
     - name: Pull image
       run: docker pull ghcr.io/zingolabs/zcashrpc:latest
