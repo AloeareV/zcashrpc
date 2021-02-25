@@ -1,0 +1,1 @@
+{"balance":"Decimal","blocks":"Decimal","connections":"Decimal","difficulty":"Decimal","errors":"String","keypoololdest":"Decimal","keypoolsize":"Decimal","paytxfee":"Decimal","protocolversion":"Decimal","proxy":"Option<String>","relayfee":"Decimal","testnet":"bool","timeoffset":"Decimal","unlocked_until":"Decimal","version":"Decimal","walletversion":"Decimal"}

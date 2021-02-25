@@ -8,7 +8,7 @@ fn main() {
     for filenode in std::fs::read_dir(&std::path::Path::new(
         &std::env::args()
             .nth(1)
-            .unwrap_or("./example_dir".to_string()),
+            .unwrap_or("./supported_calls".to_string()),
     ))
     .unwrap()
     {
@@ -48,13 +48,14 @@ fn process_response(
     acc: proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let file_body = get_data(&file).expect("Couldn't unpack file!");
-    let name = capitalize_first_char(
+    let mut name = capitalize_first_char(
         file.file_name()
             .unwrap()
             .to_string_lossy()
             .strip_suffix(".json")
             .unwrap(),
     );
+    name.push_str("Response");
     match file_body {
         serde_json::Value::Object(obj) => {
             typegen(obj, &name, acc)
@@ -73,7 +74,9 @@ fn process_response(
 
 fn output_path() -> Box<std::path::Path> {
     Box::from(std::path::Path::new(
-        &std::env::args().nth(2).unwrap_or("./output.rs".to_string()),
+        &std::env::args()
+            .nth(2)
+            .unwrap_or("./../src/client/rpc_response_types.rs".to_string()),
     ))
 }
 
@@ -330,10 +333,10 @@ mod unit {
 #[cfg(test)]
 mod test_consts {
     pub(super) const GETINFO_RESPONSE: &str = "# [derive (Debug , serde :: \
-    Deserialize , serde :: Serialize)] pub struct Getinfo { pub balance : \
-    rust_decimal :: Decimal , pub blocks : rust_decimal :: Decimal , pub \
-    connections : rust_decimal :: Decimal , pub difficulty : rust_decimal :: \
-    Decimal , pub errors : String , pub keypoololdest : rust_decimal :: \
+    Deserialize , serde :: Serialize)] pub struct GetinfoResponse { pub \
+    balance : rust_decimal :: Decimal , pub blocks : rust_decimal :: Decimal \
+    , pub connections : rust_decimal :: Decimal , pub difficulty : rust_decimal \
+    :: Decimal , pub errors : String , pub keypoololdest : rust_decimal :: \
     Decimal , pub keypoolsize : rust_decimal :: Decimal , pub paytxfee : \
     rust_decimal :: Decimal , pub protocolversion : rust_decimal :: Decimal , \
     pub proxy : Option < String > , pub relayfee : rust_decimal :: Decimal , \

@@ -1,12 +1,10 @@
 //! Includes both `Client` and all of the RPC response types.
 #[macro_use]
 mod callrpc;
-pub mod subcomponents;
+pub mod rpc_response_types;
 pub mod utils;
 
-use self::subcomponents::{
-    GenerateResponse, GetBlockChainInfoResponse, ZGetNewAddressResponse,
-};
+use self::rpc_response_types::GetblockchaininfoResponse;
 use crate::ResponseResult;
 use serde::de::DeserializeOwned;
 use std::future::Future;
@@ -27,10 +25,10 @@ impl Client {
     }
 
     zcashrpc_macros::declare_rpc_client_methods! {
-        GetBlockChainInfo,
-        ZGetNewAddress,
-        Generate (how_many: u32),
-    }
+    //        Getinfo,
+            Getblockchaininfo,
+    //      Generate(how_many: u32),
+        }
 }
 
 impl Client {
