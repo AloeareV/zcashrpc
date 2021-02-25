@@ -4,6 +4,7 @@ use error::TypegenResult;
 
 fn main() {
     let mut code = Vec::new();
+    dbg!(&code);
     for filenode in std::fs::read_dir(&std::path::Path::new(
         &std::env::args()
             .nth(1)
@@ -16,13 +17,20 @@ fn main() {
             proc_macro2::TokenStream::new(),
         ));
     }
+    let initial_comment: Vec<String> = vec![
+        r#"//proceedurally generated response types, note that zcashrpc-typegen
+            //is in early alpha, and output is subject to change at any time.
+            "#
+        .to_string(),
+    ];
     use std::io::Write as _;
     std::fs::File::create(output_path())
         .unwrap()
         .write(
-            code.into_iter()
-                .collect::<proc_macro2::TokenStream>()
-                .to_string()
+            initial_comment
+                .into_iter()
+                .chain(code.into_iter().map(|x| x.to_string()))
+                .collect::<String>()
                 .as_bytes(),
         )
         .unwrap();
