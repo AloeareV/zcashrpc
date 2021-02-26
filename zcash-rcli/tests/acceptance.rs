@@ -31,13 +31,12 @@ pub static RUNNER: Lazy<CmdRunner> = Lazy::new(|| CmdRunner::default());
 
 /// Use `ZcashRcliConfig::default()` value if no config or args
 #[test]
-fn get_blockchain_info() {
+fn get_info() {
     let mut runner = RUNNER.clone();
-    let mut cmd = runner.arg("getblockchaininfo").capture_stdout().run();
+    let mut cmd = runner.arg("getinfo").capture_stdout().run();
 
     cmd.stdout().expect_line("Help flag: false");
-    cmd.stdout()
-        .expect_regex(r"Ok\(GetblockchaininfoResponse \{*.");
+    cmd.stdout().expect_regex(r"Ok\(GetinfoResponse \{*.");
     cmd.wait().unwrap().expect_success();
 }
 
@@ -45,14 +44,10 @@ fn get_blockchain_info() {
 #[test]
 fn get_info_with_help() {
     let mut runner = RUNNER.clone();
-    let mut cmd = runner
-        .args(&["getblockchaininfo", "-h"])
-        .capture_stdout()
-        .run();
+    let mut cmd = runner.args(&["getinfo", "-h"]).capture_stdout().run();
 
     cmd.stdout().expect_line("Help flag: true");
-    cmd.stdout()
-        .expect_regex(r"Ok\(GetblockchaininfoResponse \{*.");
+    cmd.stdout().expect_regex(r"Ok\(GetinfoResponse \{*.");
     cmd.wait().unwrap().expect_success();
 }
 

@@ -26,10 +26,10 @@ pub enum ZcashRcliCmd {
     #[options(help = "get usage information")]
     Help(Help<Self>),
 
-    //    /// The `getinfo` subcommand
-    //    #[options(help = "getinfo rpc call, no arguments.", name = "getinfo")]
-    //    GetInfo(GetInfoCmd),
-    //
+    /// The `getinfo` subcommand
+    #[options(help = "getinfo rpc call, no arguments.", name = "getinfo")]
+    GetInfo(GetInfoCmd),
+
     //    /// The 'generate' regtest command
     //    #[options(
     //        help = "generate rpc call. generate x (number of blocks to generate"
@@ -48,7 +48,7 @@ pub enum ZcashRcliCmd {
 }
 
 zcashrpc_macros::declare_rcli_command_types!(
-    //    GetInfo,
+    GetInfo,
     GetBlockchainInfo,
     //    Generate(how_many: u32),
 );
