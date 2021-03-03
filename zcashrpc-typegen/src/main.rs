@@ -74,9 +74,7 @@ fn process_response(
 
 fn output_path() -> Box<std::path::Path> {
     Box::from(std::path::Path::new(
-        &std::env::args()
-            .nth(2)
-            .unwrap_or("./../src/client/rpc_response_types.rs".to_string()),
+        &std::env::args().nth(2).unwrap_or("output.rs".to_string()),
     ))
 }
 
@@ -112,10 +110,6 @@ fn typegen(
             return Ok((Some(special_cases::Case::FourXs), acc));
         }
 
-        if special_cases::RESERVED_KEYWORDS.contains(&field_name.as_str()) {
-            todo!("Field name with reserved keyword: {}", field_name);
-        }
-
         if field_name.starts_with("alsoStandalone<") {
             field_name = field_name
                 .trim_end_matches(">")
@@ -131,6 +125,7 @@ fn typegen(
         if let Some(None) = standalone {
             standalone = Some(Some(val.clone()));
         }
+        let mut old_field_name = String::new();
 
         if field_name.starts_with("Option<") {
             field_name = field_name
@@ -143,13 +138,32 @@ fn typegen(
                     .unwrap();
         }
 
+        let reserved = if special_cases::RESERVED_KEYWORDS
+            .contains(&field_name.as_str())
+        {
+            old_field_name = field_name.clone();
+            field_name = [&field_name, "_field"].concat();
+            true
+        } else {
+            false
+        };
+
         //println!("Got field: {}, {}", field_name, val);
         let key = proc_macro2::Ident::new(
             &field_name,
             proc_macro2::Span::call_site(),
         );
         let added_code = quote::quote!(pub #key: #val,);
+        if reserved {
+            dbg!(&old_field_name);
+            code.push(quote::quote!(#[serde(rename = #old_field_name)]))
+        }
         code.push(added_code);
+        dbg!(code
+            .iter()
+            .cloned()
+            .collect::<proc_macro2::TokenStream>()
+            .to_string());
     }
 
     let ident = proc_macro2::Ident::new(name, proc_macro2::Span::call_site());
